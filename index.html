@@ -24,13 +24,27 @@
         *{box-sizing:border-box}
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #050505;
+            background:
+                radial-gradient(circle at top, rgba(23,32,53,.55), transparent 38%),
+                linear-gradient(180deg, #030509 0%, #06080c 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 22px;
             color: #fff;
+        }
+        body.light-mode {
+            --ig-bg:#ffffff;
+            --ig-soft:#f4f4f6;
+            --ig-border:#dbdbdb;
+            --ig-card:#efeff4;
+            --ig-btn:#efeff4;
+            --ig-text:#111111;
+            --ig-muted:#6d6d72;
+            --ig-blue:#00376b;
+            background: linear-gradient(180deg, #f7f8fb 0%, #eef1f6 100%);
+            color:#111;
         }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -48,20 +62,52 @@
         [contenteditable="true"]:hover { background: rgba(255,255,255,.10); box-shadow: 0 0 0 2px rgba(255,255,255,.08); }
         [contenteditable="true"]:focus { background: rgba(255,255,255,.14); box-shadow: 0 0 0 2px rgba(255,255,255,.18); }
         span[contenteditable="true"], div[contenteditable="true"] { display: inline-block; min-width: 4px; }
+        .app-frame{
+            display:flex;
+            align-items:flex-start;
+            gap:18px;
+            width:min(100%, 1120px);
+            justify-content:center;
+        }
+        .controls-panel{
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+            align-self:center;
+        }
+        .theme-toggle{
+            border:1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,.08);
+            color:#fff;
+            border-radius:16px;
+            padding:14px 16px;
+            font-size:14px;
+            font-weight:700;
+            min-width:148px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 16px 30px rgba(0,0,0,.28);
+        }
+        body.light-mode .theme-toggle{
+            background: rgba(255,255,255,.85);
+            color:#111;
+            border-color: rgba(0,0,0,.08);
+        }
         .phone-shell {
-            width: 393px;
-            height: 852px;
+            width: 360px;
+            height: 780px;
             background: #000;
-            border-radius: 54px;
-            border: 5px solid #1a1a1c;
-            box-shadow: 0 0 0 1px #2a2a2a,0 30px 60px -10px rgba(0,0,0,.9),0 0 100px rgba(255,255,255,.05);
+            border-radius: 48px;
+            border: 4px solid #18181b;
+            box-shadow: 0 0 0 1px #2a2a2a,0 26px 55px -12px rgba(0,0,0,.85),0 0 90px rgba(255,255,255,.05);
             position: relative;
             overflow: hidden;
+            flex: 0 0 auto;
         }
+        body.light-mode .phone-shell{background:#fff; border-color:#d8d8dd; box-shadow:0 0 0 1px #e6e6ea,0 26px 55px -12px rgba(0,0,0,.18);}
         .screen {
             width: 100%;
             height: 100%;
-            border-radius: 47px;
+            border-radius: 42px;
             overflow: hidden;
             background: var(--ig-bg);
             position: relative;
@@ -69,18 +115,18 @@
         .glass-reflection {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,.05) 0%, rgba(255,255,255,0) 35%);
+            background: linear-gradient(135deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,0) 35%);
             pointer-events: none;
             z-index: 5;
         }
         .top-safe { padding-top: 10px; }
         .dynamic-island {
             position: absolute;
-            top: 12px;
+            top: 11px;
             left: 50%;
             transform: translateX(-50%);
-            width: 122px;
-            height: 35px;
+            width: 112px;
+            height: 31px;
             border-radius: 999px;
             background: #000;
             z-index: 30;
@@ -88,7 +134,7 @@
         .app-scroll {
             height: 100%;
             overflow-y: auto;
-            padding-bottom: 105px;
+            padding-bottom: 98px;
             position: relative;
             z-index: 2;
             background: #000;
@@ -107,18 +153,18 @@
             left: 0;
             right: 0;
             bottom: 0;
-            height: 92px;
-            background: #000;
-            border-top: 1px solid var(--ig-border);
+            height: 84px;
+            background: var(--ig-bg);
+            border-top: 1px solid transparent;
             display: flex;
             justify-content: space-around;
             align-items: flex-start;
-            padding: 13px 10px 28px;
+            padding: 12px 12px 23px;
             z-index: 25;
         }
         .home-indicator {
             position: absolute;
-            bottom: 9px;
+            bottom: 8px;
             left: 50%;
             transform: translateX(-50%);
             width: 135px;
@@ -130,17 +176,17 @@
         .tab-active::after {
             content:"";
             position:absolute;
-            left:18%;
-            right:18%;
-            top:0;
-            height:1.5px;
+            left:15%;
+            right:15%;
+            bottom:0;
+            height:3px;
             background:#fff;
             border-radius:999px;
         }
         .btn-ig{
             background: var(--ig-btn);
-            border-radius: 12px;
-            min-height: 40px;
+            border-radius: 16px;
+            min-height: 44px;
             font-size: 13px;
             line-height: 1;
             font-weight: 600;
@@ -162,17 +208,42 @@
         }
         .muted{color:var(--ig-muted)}
         .fa-fw-ig { width: 1.05em; text-align: center; }
+        .tab-icon{font-size:31px; line-height:1; color:#a8a8b3;}
+        .tab-icon.reels{font-size:34px;color:#fff;}
+        .tab-icon.profile-tab{font-size:33px;}
+        .tab-chevron{font-size:22px;color:#fff;margin-left:10px;margin-top:1px;}
+        .nav-icon{font-size:30px;line-height:1;color:#fff;}
+        .nav-profile{width:33px;height:33px;border-radius:999px;overflow:hidden;border:1.8px solid #fff;}
+        .status-battery{width:48px;height:25px;border-radius:10px;font-size:19px;}
+        body.light-mode .screen, body.light-mode .app-scroll{background:var(--ig-bg);}
+        body.light-mode .bottom-nav{background:var(--ig-bg);}
+        body.light-mode .glass-reflection{background:linear-gradient(135deg, rgba(255,255,255,.28) 0%, rgba(255,255,255,0) 40%);}
+        body.light-mode .dynamic-island{background:#111;}
+        body.light-mode .tab-icon.reels, body.light-mode .nav-icon, body.light-mode .bottom-nav, body.light-mode .btn-ig{color:#111;}
+        body.light-mode .tab-icon{color:#8e8e93;}
+        body.light-mode .tab-chevron{color:#111;}
+        body.light-mode .status-icon-bars span, body.light-mode .fa-wifi, body.light-mode .fa-building-columns{background:unset;color:#111;}
+        body.light-mode .home-indicator{background:rgba(0,0,0,.9);}
+        @media (max-width: 780px){
+            .app-frame{flex-direction:column-reverse; align-items:center; gap:14px;}
+            .controls-panel{align-self:stretch; align-items:center;}
+        }
     </style>
 </head>
 <body>
-    <div class="phone-shell">
+    <div class="app-frame">
+        <div class="controls-panel">
+            <button id="themeToggle" class="theme-toggle"><i class="fa-solid fa-circle-half-stroke mr-2"></i>Alternar tema</button>
+        </div>
+
+        <div class="phone-shell">
         <div class="screen">
             <div class="glass-reflection"></div>
             <div class="dynamic-island"></div>
 
             <div class="app-scroll hide-scrollbar top-safe">
                 <!-- Status bar -->
-                <div class="relative z-20 flex items-center justify-between px-7 pt-4 pb-1 text-[14px] font-semibold">
+                <div class="relative z-20 flex items-center justify-between px-7 pt-5 pb-1 text-[15px] font-semibold">
                     <div class="flex items-center gap-1.5">
                         <span contenteditable="true" spellcheck="false">11:36</span>
                         <i class="fa-solid fa-building-columns text-[13px]"></i>
@@ -186,13 +257,13 @@
                         </div>
                         <i class="fa-solid fa-wifi text-[13px]"></i>
                         <div class="relative ml-0.5">
-                            <div class="w-[30px] h-[17px] rounded-[7px] bg-white/95 text-black text-[11px] font-bold flex items-center justify-center px-1" contenteditable="true" spellcheck="false">69</div>
+                            <div class="status-battery bg-white/95 text-black font-bold flex items-center justify-center px-1" contenteditable="true" spellcheck="false">69</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Top header -->
-                <div class="relative z-20 flex items-center justify-between px-4 pt-3 pb-1">
+                <div class="relative z-20 flex items-center justify-between px-4 pt-3 pb-1.5">
                     <button class="text-white text-[28px] leading-none mt-[-2px]">+</button>
                     <div class="flex items-center gap-1 absolute left-1/2 -translate-x-1/2 top-[14px]">
                         <span class="font-bold text-[20px] tracking-[-0.3px]" contenteditable="true" spellcheck="false">ottakubrasil</span>
@@ -252,7 +323,7 @@
                         <span contenteditable="true" spellcheck="false">www.ottakubrasil.online e 1 outro link</span>
                     </div>
 
-                    <div class="mt-1.5 flex items-center gap-4 font-semibold text-[13px] text-white">
+                    <div class="mt-1.5 flex items-center gap-4 font-semibold text-[14px] text-white">
                         <div class="flex items-center gap-1.5">
                             <i class="fa-brands fa-threads text-[14px]"></i>
                             <span contenteditable="true" spellcheck="false">ottakubrasil</span>
@@ -265,9 +336,9 @@
                 </div>
 
                 <div class="px-4 mt-3">
-                    <div class="bg-[var(--ig-card)] rounded-2xl px-4 py-3.5">
+                    <div class="bg-[var(--ig-card)] rounded-[20px] px-4 py-4">
                         <div class="font-semibold text-[13px]" contenteditable="true" spellcheck="false">Painel profissional</div>
-                        <div class="text-[12px] text-[var(--ig-muted)] mt-0.5 flex items-center gap-1.5">
+                        <div class="text-[12px] text-[var(--ig-muted)] mt-0.5 leading-none flex items-center gap-1.5">
                             <i class="fa-solid fa-arrow-trend-up text-[#34c759] text-[12px]"></i>
                             <span contenteditable="true" spellcheck="false">13,8 mi visualizações nos últimos 30 dias.</span>
                         </div>
@@ -275,7 +346,7 @@
                 </div>
 
                 <!-- Action buttons -->
-                <div class="px-4 mt-4 flex gap-2">
+                <div class="px-4 mt-4 flex gap-2.5">
                     <button class="btn-ig flex-1">Editar perfil</button>
                     <button class="btn-ig flex-[1.15]">Compartilhar perfil</button>
                     <button class="btn-ig flex-1">Assinatura</button>
@@ -307,12 +378,12 @@
                 </div>
 
                 <!-- Tabs like screenshot -->
-                <div class="mt-3 border-t border-[var(--ig-border)] flex items-center h-[44px]">
-                    <div class="relative flex-1 flex justify-center items-center tab-active text-white text-[22px]"><i class="fa-solid fa-grip"></i></div>
-                    <div class="flex-1 flex justify-center items-center text-[#909090] text-[21px]"><i class="fas fa-crown"></i></div>
-                    <div class="flex-1 flex justify-center items-center text-[#909090] text-[21px]"><i class="fa-solid fa-circle-play"></i></div>
-                    <div class="flex-1 flex justify-center items-center text-[#909090] text-[21px]"><i class="fa-solid fa-arrows-rotate"></i></div>
-                    <div class="flex-1 flex justify-center items-center text-[#909090] text-[21px]"><i class="fa-regular fa-id-badge"></i></div>
+                <div class="mt-3 border-t border-[var(--ig-border)] flex items-center h-[58px]">
+                    <div class="relative flex-1 h-full flex justify-center items-center tab-active"><i class="fa-solid fa-table-cells-large tab-icon"></i></div>
+                    <div class="flex-1 h-full flex justify-center items-center"><i class="fas fa-crown tab-icon"></i></div>
+                    <div class="flex-1 h-full flex justify-center items-center"><span class="flex items-center"><i class="fa-solid fa-circle-play tab-icon reels"></i><i class="fa-solid fa-chevron-right tab-chevron"></i></span></div>
+                    <div class="flex-1 h-full flex justify-center items-center"><i class="fa-solid fa-arrows-rotate tab-icon"></i></div>
+                    <div class="flex-1 h-full flex justify-center items-center"><i class="fa-regular fa-id-card profile-tab tab-icon"></i></div>
                 </div>
 
                 <!-- Reels grid -->
@@ -356,22 +427,30 @@
 
             <!-- Bottom nav in screenshot order -->
             <div class="bottom-nav text-white">
-                <div class="text-[27px]"><i class="fa-regular fa-house"></i></div>
-                <div class="text-[27px]"><i class="fa-regular fa-circle-play"></i></div>
-                <div class="text-[25px] relative mt-[-1px]">
+                <div class="nav-icon"><i class="fa-regular fa-house"></i></div>
+                <div class="nav-icon"><i class="fa-regular fa-circle-play"></i></div>
+                <div class="nav-icon relative mt-[-1px]">
                     <i class="fa-regular fa-paper-plane"></i>
-                    <span class="absolute -top-[2px] -right-[2px] w-[8px] h-[8px] rounded-full bg-[var(--ig-red)] border border-black"></span>
+                    <span class="absolute top-[7px] right-[-2px] w-[10px] h-[10px] rounded-full bg-[var(--ig-red)] border border-black"></span>
                 </div>
-                <div class="text-[27px]"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <div class="nav-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
                 <div class="relative">
-                    <div class="w-7 h-7 rounded-full overflow-hidden border border-white">
+                    <div class="nav-profile">
                         <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=60&q=80" class="w-full h-full object-cover" alt="">
                     </div>
-                    <span class="absolute -bottom-[1px] -right-[1px] w-[8px] h-[8px] rounded-full bg-[var(--ig-red)] border border-black"></span>
+                    <span class="absolute bottom-[1px] right-[-1px] w-[10px] h-[10px] rounded-full bg-[var(--ig-red)] border border-black"></span>
                 </div>
             </div>
             <div class="home-indicator"></div>
         </div>
     </div>
+    </div>
+
+    <script>
+        const btn = document.getElementById('themeToggle');
+        btn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+        });
+    </script>
 </body>
 </html>
